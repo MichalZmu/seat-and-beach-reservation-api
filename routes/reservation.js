@@ -15,7 +15,6 @@ router.post('/', (req, res, next) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber
     });
-    console.log(reservation);
     reservation.save().then(result => {
         res.status(201).json({
             message: 'reservation added successfully',

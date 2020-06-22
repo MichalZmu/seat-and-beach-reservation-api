@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
 
 router.post('/sign-up', (req, res, next) => {
-    console.log('req.body.email: ', req.body.email);
     bcrypt.hash(req.body.password, 10).then(hash => {
         const user = new User({
             password: hash,
@@ -45,7 +44,7 @@ router.post('/login', (req, res, next) => {
         const token = jwt.sign({
             email: fetchedUser.email,
             userId: fetchedUser._id
-        }, 'secret_this_should_be_longer', {expiresIn: '1h'});
+        }, 'iFOIOomHZRkdNuqgWEYMjMQ0YV6v2aOD', {expiresIn: '1h'});
         res.status(200).json({
             userId: fetchedUser._id,
             token: token,
