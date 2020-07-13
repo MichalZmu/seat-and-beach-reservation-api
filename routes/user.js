@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
 
 router.post('/sign-up', (req, res, next) => {
+    console.log('req.body.email: ', req.body.email);
     bcrypt.hash(req.body.password, 10).then(hash => {
         const user = new User({
             password: hash,
@@ -38,7 +39,7 @@ router.post('/login', (req, res, next) => {
     }).then(result => {
         if (!result) {
             return res.status(401).json({
-                message: 'auth failed, user not found'
+                message: 'IncorrectEmailOrPassword'
             });
         }
         const token = jwt.sign({

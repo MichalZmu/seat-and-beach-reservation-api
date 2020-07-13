@@ -15,6 +15,7 @@ router.post('/', (req, res, next) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber
     });
+    console.log(reservation);
     reservation.save().then(result => {
         res.status(201).json({
             message: 'reservation added successfully',
@@ -26,6 +27,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
+    console.log(req.query);
     if(req.query.dateFrom && req.query.dateTo) {
         Reservation.find({
             dateFrom: { $gte: req.query.dateFrom},
@@ -34,11 +36,11 @@ router.get('/', (req, res, next) => {
             res.status(200).json(reservations);
         });
     } else {
-        Reservation.find().then(resevations => {
-            res.status(200).json(resevations);
-        });
+        res.status(404).json('not valid date params')
     }
 });
+
+
 
 router.get('/user', checkAuth, (req, res, next) => {
     Reservation.find({userId: req.query.userId}).then(reservations => {
@@ -48,6 +50,5 @@ router.get('/user', checkAuth, (req, res, next) => {
     })
 
 });
-
 
 module.exports = router;
