@@ -43,8 +43,24 @@ router.get('/', (req, res, next) => {
 
 
 router.get('/user', checkAuth, (req, res, next) => {
-    Reservation.find({userId: req.query.userId}).then(reservations => {
-        res.status(200).json(reservations)
+    const userId = req.query.userId;
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.currentPage;
+    let fetchedReservations;
+    const query = Reservation.find({userId: userId});
+    if(pageSize && currentPage) {
+        query.skip(pageSize * currentPage).limit(pageSize);
+    }
+    query
+        .then(allReservations => {
+            fetchedReservations = allReservations;
+            return Reservation.countDocuments({userId: userId});
+        })
+        .then(count => {
+        res.status(200).json({
+            reservations: fetchedReservations,
+            maxReservations: count
+        })
     }).catch(() => {
         res.status(404).json('user not found')
     })
