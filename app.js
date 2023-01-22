@@ -7,7 +7,7 @@ const reservationRoutes = require("./routes/reservation");
 const userRoutes = require("./routes/user");
 
 
-mongoose.connect("mongodb+srv://Michal:XHS1xreDMSyId6oc@cluster0-ab37y.gcp.mongodb.net/test?retryWrites=true&w=majority").then(() => {
+mongoose.connect("mongodb+srv://admin:DSIg90BUcGTn93jt@cluster0.oxrjn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority").then(() => {
     console.log('Connected to database');
 })
     .catch(() => {
